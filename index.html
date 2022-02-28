@@ -27,14 +27,19 @@
                 <div class="row">
                     <div class="col-sm-8 col-md-7 py-4">
                         <h4 class="text-white">About</h4>
-                        <p class="text-muted">Putin made it almost impossible to hear what actually is happening in
+                        <p class="text-muted" style="color:#ffc107 !important">Putin made it almost impossible to hear what actually is happening in
                             Ukraine.
                             Putin's regime floods Russian people with the news about Nazist rulling Ukraine, Russian
                             troops bringing peace not dead.
                             It's all lies.
-                            Russia invaded independent country. Please send a text message to a random
+                            Russia invaded independent country. 
+                            
+                            Please send a text message to a random
                             mobile number in Russia with predefined text in Russian explaining in few words what is
                             actually going on.
+
+                            Help Russian people to get to the thurth.
+
                             Thank you for your support </p>
                     </div>
                     <div class="col-sm-4 offset-md-1 py-4">
@@ -46,6 +51,8 @@
                             <li><a href="https://www.thetimes.co.uk/" target="_blank" class="text-white">The Times</a>
                             </li>
                         </ul>
+                        <span style="color:orange">Contact us: <br>
+                        Telegram: @papr00t</span>
                     </div>
                 </div>
             </div>
@@ -80,13 +87,20 @@
                 </div>
             </div>
         </div>
+        <div class="row align-items-center justify-content-center" style="margin-top:-135px">
+            <div class="col-xl-6 col-md-10">
+                <div class="alert alert-light" role="alert">
+                    Please note that this is version 0.1-aplha it's not perfect, we know that. It will be
+                    continuesly improved.
+                </div>
+            </div>
+        </div>
         <div class="row align-items-center justify-content-center">
             <div class="col-xl-3 col-md-8">
                 <center>
                     <h2 style="color:#ffc107">Scan to send</h2>
-                    <a id="send-to-link" class="btn btn-danger"
-                        href="">Send
-                        a SMS message</a>
+                    <a id="send-to-link" class="btn btn-danger" href="">Send
+                        SMS <br> <i>works only on mobile phones</i></a>
                     <div id="qrcode"></div>
                     <div>
                         <br>
@@ -111,8 +125,10 @@
                 <div class="modal-body">
                     <p>Some QR scanners have difficulties parsing text written in Cyrylic. Don't worry there is a way
                         out.
-                        Scan this QR code with your mobile it contains URL of this site so you can open it on your mobile easily.
-                        Once you have the site opened on your mobile you can click button 'send message', no need to use QR code.
+                        Scan this QR code with your mobile it contains URL of this site so you can open it on your
+                        mobile easily.
+                        Once you have the site opened on your mobile you can click button 'send message', no need to use
+                        QR code.
                     <div id="site-url"></div>
                     </p>
                 </div>
@@ -141,23 +157,27 @@
         });
 
         new QRCode(document.getElementById("site-url"), "https://messagerussianfriend.today");
-        
-        document.getElementById('qrcode').style.display = isMobile() ? 'none' : 'block';
-        document.getElementById('send-to-link').style.display = isMobile() ? 'block' : 'none';
 
         document.getElementById('button-generate').addEventListener('click', function () {
             run();
         })
 
-        run();       
+        run();
 
         function run() {
+            document.getElementById('qrcode').style.display = isMobile() ? 'none' : 'block';
+            document.getElementById('send-to-link').style.display = isMobile() ? 'block' : 'none';
             let number = generate();
             document.getElementById('number').value = number;
             document.getElementById('send-to-link').href = "sms://" + number + "?body=" + document.getElementById('text-message').value
 
             QR_CODE.clear();
-            QR_CODE.makeCode("SMSTO:" + number + ":" + document.getElementById('text-message').value);            
+            try {
+                QR_CODE.makeCode("SMSTO:" + number + ":" + document.getElementById('text-message').value);
+            } catch {
+                document.getElementById('qrcode').style.display = 'none';
+                document.getElementById('send-to-link').style.display = 'block';
+            }
         }
     </script>
 </body>
