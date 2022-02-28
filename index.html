@@ -75,7 +75,7 @@
                 </div>
                 <div class="form-floating">
                     <textarea class="form-control" placeholder="message" id="text-message"
-                        style="height: 120px">Россия вторглась в суверенную Украину</textarea>
+                        style="height: 120px">Pocия нaпaлa нa Yкpaинy Poccийcкиe coлдaты нecyт cмepть</textarea>
                     <label for="text-message">Message</label>
                 </div>
             </div>
@@ -84,8 +84,8 @@
             <div class="col-xl-3 col-md-8">
                 <center>
                     <h2 style="color:#ffc107">Scan to send</h2>
-                    <a id="sent-to-link" class="btn btn-danger"
-                        href="sms://+14035550185?body=I%27m%20interested%20in%20your%20product.%20Please%20contact%20me.">Send
+                    <a id="send-to-link" class="btn btn-danger"
+                        href="">Send
                         a SMS message</a>
                     <div id="qrcode"></div>
                     <div>
@@ -111,8 +111,8 @@
                 <div class="modal-body">
                     <p>Some QR scanners have difficulties parsing text written in Cyrylic. Don't worry there is a way
                         out.
-                        Scan this QR code with your mobile. Once you have the site opened on your mobile you can click
-                        send, no need to use QR code.
+                        Scan this QR code with your mobile it contains URL of this site so you can open it on your mobile easily.
+                        Once you have the site opened on your mobile you can click button 'send message', no need to use QR code.
                     <div id="site-url"></div>
                     </p>
                 </div>
@@ -133,28 +133,32 @@
     <script src="qr.js"></script>
     <script>
         const QR_CODE = new QRCode("qrcode", {
-            width: 256,
-            height: 256,
+            width: 300,
+            height: 300,
             colorDark: "#000000",
             colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.L,
+            correctLevel: QRCode.CorrectLevel.M,
         });
 
         new QRCode(document.getElementById("site-url"), "https://messagerussianfriend.today");
-
-        let text = document.getElementById("text-message");
-        QR_CODE.makeCode("SMSTO:+79685553322:Test");
-
+        
         document.getElementById('qrcode').style.display = isMobile() ? 'none' : 'block';
-        document.getElementById('sent-to-link').style.display = isMobile() ? 'block' : 'none';
-        document.getElementById('number').value = generate();
+        document.getElementById('send-to-link').style.display = isMobile() ? 'block' : 'none';
 
         document.getElementById('button-generate').addEventListener('click', function () {
+            run();
+        })
+
+        run();       
+
+        function run() {
             let number = generate();
             document.getElementById('number').value = number;
+            document.getElementById('send-to-link').href = "sms://" + number + "?body=" + document.getElementById('text-message').value
+
             QR_CODE.clear();
-            QR_CODE.makeCode("SMSTO:" + number + ":" + document.getElementById('text-message').value);
-        })
+            QR_CODE.makeCode("SMSTO:" + number + ":" + document.getElementById('text-message').value);            
+        }
     </script>
 </body>
 
